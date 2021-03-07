@@ -2,6 +2,8 @@
 
 ![Visual Studio Code with Cortex-Debug Installed](./images/vs-code-screenshot.png)
 
+This is a modification of (https://github.com/Marus/cortex-debug/). All credit goes to the original author.
+
 Debugging support for ARM Cortex-M Microcontrollers with the following features:
 
 * Support J-Link, OpenOCD GDB Server

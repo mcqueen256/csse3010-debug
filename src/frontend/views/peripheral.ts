@@ -14,11 +14,11 @@ export class PeripheralTreeProvider implements vscode.TreeDataProvider<Periphera
     // tslint:disable-next-line:variable-name
     public _onDidChangeTreeData: vscode.EventEmitter<PeripheralBaseNode | undefined> = new vscode.EventEmitter<PeripheralBaseNode | undefined>();
     public readonly onDidChangeTreeData: vscode.Event<PeripheralBaseNode | undefined> = this._onDidChangeTreeData.event;
-    
+
     private peripherials: PeripheralNode[] = [];
     private loaded: boolean = false;
     private svdFileName: string | null;
-    
+
     constructor() {
 
     }
@@ -26,12 +26,12 @@ export class PeripheralTreeProvider implements vscode.TreeDataProvider<Periphera
     private saveState(path: string): void {
         const state: NodeSetting[] = [];
         this.peripherials.forEach((p) => {
-            state.push(... p.saveState());
+            state.push(...p.saveState());
         });
-        
+
         fs.writeFileSync(path, JSON.stringify(state), { encoding: 'utf8', flag: 'w' });
     }
-    
+
     private loadSVD(SVDFile: string): Thenable<any> {
         if (!path.isAbsolute(SVDFile)) {
             const fullpath = path.normalize(path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, SVDFile));
@@ -50,7 +50,7 @@ export class PeripheralTreeProvider implements vscode.TreeDataProvider<Periphera
         const pathParts = path.split('.');
         const peripheral = this.peripherials.find((p) => p.name === pathParts[0]);
         if (!peripheral) { return null; }
-        
+
         return peripheral.findByPath(pathParts.slice(1));
     }
 
@@ -84,12 +84,12 @@ export class PeripheralTreeProvider implements vscode.TreeDataProvider<Periphera
             this.peripherials = [];
             this.loaded = false;
             this._onDidChangeTreeData.fire(undefined);
-            
+
             if (svdfile) {
                 setTimeout(() => {
                     this.loadSVD(svdfile).then(
                         () => {
-                            vscode.workspace.findFiles('.vscode/.cortex-debug.peripherals.state.json', null, 1).then((value) => {
+                            vscode.workspace.findFiles('.vscode/.csse3010-debug.peripherals.state.json', null, 1).then((value) => {
                                 if (value.length > 0) {
                                     const fspath = value[0].fsPath;
                                     const data = fs.readFileSync(fspath, 'utf8');
@@ -137,10 +137,10 @@ export class PeripheralTreeProvider implements vscode.TreeDataProvider<Periphera
 
     public debugSessionTerminated(): Thenable<any> {
         if (vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0) {
-            const fspath = path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, '.vscode', '.cortex-debug.peripherals.state.json');
+            const fspath = path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, '.vscode', '.csse3010-debug.peripherals.state.json');
             this.saveState(fspath);
         }
-        
+
         this.peripherials = [];
         this.loaded = false;
         this._onDidChangeTreeData.fire(undefined);
@@ -155,7 +155,7 @@ export class PeripheralTreeProvider implements vscode.TreeDataProvider<Periphera
     }
 
     public debugContinued() {
-        
+
     }
 
     public togglePinPeripheral(node: PeripheralBaseNode) {

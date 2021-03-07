@@ -38,12 +38,12 @@ export class SymbolTable {
     //
     // TODO: Support for source-maps for both gdb and for symbol/file lookups
     // TODO: some of the arrays below should be maps. Later
-    private staticsByFile: {[file: string]: SymbolInformation[]} = {};
+    private staticsByFile: { [file: string]: SymbolInformation[] } = {};
     private globalVars: SymbolInformation[] = [];
-    private globalFuncsMap: {[key: string]: SymbolInformation} = {};    // Key is function name
+    private globalFuncsMap: { [key: string]: SymbolInformation } = {};    // Key is function name
     private staticVars: SymbolInformation[] = [];
-    private staticFuncsMap: {[key: string]: SymbolInformation[]} = {};  // Key is function name
-    private fileMap: {[key: string]: string[]} = {};                    // basename of a file to a potential list of aliases we found
+    private staticFuncsMap: { [key: string]: SymbolInformation[] } = {};  // Key is function name
+    private fileMap: { [key: string]: string[] } = {};                    // basename of a file to a potential list of aliases we found
 
     constructor(private toolchainPath: string, private toolchainPrefix: string, private executable: string, private demangle: boolean) {
     }
@@ -191,7 +191,7 @@ export class SymbolTable {
     public printSyms(cb?: (str: string) => any) {
         cb = cb || console.log;
         for (const sym of this.allSymbols) {
-            let str = sym.name ;
+            let str = sym.name;
             if (sym.type === SymbolType.Function) {
                 str += ' (f)';
             } else if (sym.type === SymbolType.Object) {
@@ -241,7 +241,7 @@ export class SymbolTable {
     protected readLinesAndFileMaps(fileName: string, readFileMaps: boolean): string {
         try {
             const start = Date.now();
-            let str = fs.readFileSync(fileName, {encoding: 'utf8'});
+            let str = fs.readFileSync(fileName, { encoding: 'utf8' });
             if (readFileMaps) {
                 let counter = 0;
                 let match: RegExpExecArray;
@@ -290,13 +290,13 @@ export class SymbolTable {
             return ret;
         }
         catch (e) {
-            throw(e);
+            throw (e);
         }
     }
 
     private static createFileMapCacheFileName(fileName: string) {
         const hash = SymbolTable.createFileHash(fileName) + '.json';
-        const fName = path.join(os.tmpdir(), 'Cortex-Debug-' + hash);
+        const fName = path.join(os.tmpdir(), 'CSSE3010-Debug-' + hash);
         return fName;
     }
 
@@ -304,7 +304,7 @@ export class SymbolTable {
         try {
             const fName = SymbolTable.createFileMapCacheFileName(fileName);
             const data = JSON.stringify(this.fileMap, null, ' ');
-            fs.writeFileSync(fName, data, {encoding: 'utf8'});
+            fs.writeFileSync(fName, data, { encoding: 'utf8' });
             if (debugConsoleLogging) {
                 console.log(`data saved to ${fName}`);
             }
@@ -318,7 +318,7 @@ export class SymbolTable {
         try {
             const fName = SymbolTable.createFileMapCacheFileName(fileName);
             if (!fs.existsSync(fName)) { return false; }
-            const data = fs.readFileSync(fName, {encoding: 'utf8'});
+            const data = fs.readFileSync(fName, { encoding: 'utf8' });
             this.fileMap = JSON.parse(data);
             if (debugConsoleLogging) {
                 console.log(`data restored from ${fName}`);
@@ -328,7 +328,7 @@ export class SymbolTable {
                 const tm = Date.now();
                 fs.utimesSync(fName, tm, tm);
             }
-            catch {}
+            catch { }
             return true;
         }
         catch (e) {
@@ -338,7 +338,7 @@ export class SymbolTable {
             return false;
         }
     }
-    
+
     public getFunctionAtAddress(address: number): SymbolInformation {
         return this.allSymbols.find((s) => s.type === SymbolType.Function && s.address <= address && (s.address + s.length) > address);
     }

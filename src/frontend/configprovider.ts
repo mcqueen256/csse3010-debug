@@ -7,7 +7,7 @@ const OPENOCD_VALID_RTOS: string[] = ['eCos', 'ThreadX', 'FreeRTOS', 'ChibiOS', 
 const JLINK_VALID_RTOS: string[] = ['FreeRTOS', 'embOS', 'ChibiOS'];
 
 export class CortexDebugConfigurationProvider implements vscode.DebugConfigurationProvider {
-    constructor(private context: vscode.ExtensionContext) {}
+    constructor(private context: vscode.ExtensionContext) { }
 
     public resolveDebugConfiguration(
         folder: vscode.WorkspaceFolder | undefined,
@@ -25,7 +25,7 @@ export class CortexDebugConfigurationProvider implements vscode.DebugConfigurati
             config.debuggerArgs = config.debugger_args;
         }
         if (!config.debuggerArgs) { config.debuggerArgs = []; }
-        
+
         const type = config.servertype;
 
         let validationResponse: string = null;
@@ -97,22 +97,22 @@ export class CortexDebugConfigurationProvider implements vscode.DebugConfigurati
                 break;
         }
 
-        const configuration = vscode.workspace.getConfiguration('cortex-debug');
+        const configuration = vscode.workspace.getConfiguration('csse3010-debug');
 
         // Special case to auto-resolve GCC toolchain for STM32CubeIDE users
         if (!config.armToolchainPath && config.servertype === 'stlink') {
-           config.armToolchainPath = STLinkServerController.getArmToolchainPath();
+            config.armToolchainPath = STLinkServerController.getArmToolchainPath();
         }
 
         if (config.armToolchainPath) { config.toolchainPath = config.armToolchainPath; }
         if (!config.toolchainPath) {
             config.toolchainPath = configuration.armToolchainPath;
         }
-        
+
         if (!config.toolchainPrefix) {
             config.toolchainPrefix = configuration.armToolchainPrefix || 'arm-none-eabi';
         }
-        
+
         if (!config.gdbPath) {
             config.gdbPath = configuration.gdbPath;
         }
@@ -124,12 +124,12 @@ export class CortexDebugConfigurationProvider implements vscode.DebugConfigurati
 
         config.flattenAnonymous = configuration.flattenAnonymous;
         config.registerUseNaturalFormat = configuration.registerUseNaturalFormat;
-        
+
         if (validationResponse) {
             vscode.window.showErrorMessage(validationResponse);
             return undefined;
         }
-        
+
         return config;
     }
 
@@ -148,7 +148,7 @@ export class CortexDebugConfigurationProvider implements vscode.DebugConfigurati
         if (config.rtos) {
             return 'RTOS support is not available when using QEMU';
         }
-        
+
         return null;
     }
 
@@ -158,7 +158,7 @@ export class CortexDebugConfigurationProvider implements vscode.DebugConfigurati
         if (!config.interface) { config.interface = 'swd'; }
 
         if (!config.serverpath) {
-            const configuration = vscode.workspace.getConfiguration('cortex-debug');
+            const configuration = vscode.workspace.getConfiguration('csse3010-debug');
             config.serverpath = configuration.JLinkGDBServerPath;
         }
         if (config.rtos) {
@@ -188,7 +188,7 @@ export class CortexDebugConfigurationProvider implements vscode.DebugConfigurati
     private verifyOpenOCDConfiguration(folder: vscode.WorkspaceFolder | undefined, config: vscode.DebugConfiguration): string {
         if (config.openOCDPath && !config.serverpath) { config.serverpath = config.openOCDPath; }
         if (!config.serverpath) {
-            const configuration = vscode.workspace.getConfiguration('cortex-debug');
+            const configuration = vscode.workspace.getConfiguration('csse3010-debug');
             config.serverpath = configuration.openocdPath;
         }
 
@@ -203,14 +203,14 @@ export class CortexDebugConfigurationProvider implements vscode.DebugConfigurati
         if (!config.searchDir || config.searchDir.length === 0) {
             config.searchDir = [];
         }
-        
+
         return null;
     }
 
     private verifySTUtilConfiguration(folder: vscode.WorkspaceFolder | undefined, config: vscode.DebugConfiguration): string {
         if (config.stutilpath && !config.serverpath) { config.serverpath = config.stutilpath; }
         if (!config.serverpath) {
-            const configuration = vscode.workspace.getConfiguration('cortex-debug');
+            const configuration = vscode.workspace.getConfiguration('csse3010-debug');
             config.serverpath = configuration.stutilPath;
         }
 
@@ -230,12 +230,12 @@ export class CortexDebugConfigurationProvider implements vscode.DebugConfigurati
     private verifySTLinkConfiguration(folder: vscode.WorkspaceFolder | undefined, config: vscode.DebugConfiguration): string {
         if (config.stlinkPath && !config.serverpath) { config.serverpath = config.stlinkPath; }
         if (!config.serverpath) {
-            const configuration = vscode.workspace.getConfiguration('cortex-debug');
+            const configuration = vscode.workspace.getConfiguration('csse3010-debug');
             config.serverpath = configuration.stlinkPath;
         }
 
         if (!config.stm32cubeprogrammer) {
-            const configuration = vscode.workspace.getConfiguration('cortex-debug');
+            const configuration = vscode.workspace.getConfiguration('csse3010-debug');
             config.stm32cubeprogrammer = configuration.stm32cubeprogrammer;
         }
 
@@ -255,7 +255,7 @@ export class CortexDebugConfigurationProvider implements vscode.DebugConfigurati
     private verifyPyOCDConfiguration(folder: vscode.WorkspaceFolder | undefined, config: vscode.DebugConfiguration): string {
         if (config.pyocdPath && !config.serverpath) { config.serverpath = config.pyocdPath; }
         if (!config.serverpath) {
-            const configuration = vscode.workspace.getConfiguration('cortex-debug');
+            const configuration = vscode.workspace.getConfiguration('csse3010-debug');
             config.serverpath = configuration.pyocdPath;
         }
 
@@ -280,7 +280,7 @@ export class CortexDebugConfigurationProvider implements vscode.DebugConfigurati
         if (!config.powerOverBMP) { config.powerOverBMP = 'lastState'; }
         if (!config.interface) { config.interface = 'swd'; }
         if (!config.targetId) { config.targetId = 1; }
-        
+
         if (config.rtos) {
             return 'The Black Magic Probe GDB Server does not have support for the rtos option.';
         }
@@ -296,7 +296,7 @@ export class CortexDebugConfigurationProvider implements vscode.DebugConfigurati
 
     private verifyPEConfiguration(folder: vscode.WorkspaceFolder | undefined, config: vscode.DebugConfiguration): string {
         if (!config.serverpath) {
-            const configuration = vscode.workspace.getConfiguration('cortex-debug');
+            const configuration = vscode.workspace.getConfiguration('csse3010-debug');
             config.serverpath = configuration.PEGDBServerPath;
         }
 

@@ -35,7 +35,7 @@ const TIMESTAMP_MASK = 0b00001111;
 class ITMDecoder extends EventEmitter {
     private syncBuffer = new RingBuffer(6);
     private status: Status = Status.IDLE;
-    
+
     private rxCount: number = 0;
     private rxBuffer: Buffer;
     private rxPort: number;
@@ -45,7 +45,7 @@ class ITMDecoder extends EventEmitter {
 
     constructor() {
         super();
-        
+
         this.syncBuffer.enq(0xFF);
         this.syncBuffer.enq(0xFF);
         this.syncBuffer.enq(0xFF);
@@ -101,7 +101,7 @@ class ITMDecoder extends EventEmitter {
                         this.timestamp = 0;
                         this.resetRxPacket(-1, 5, PacketType.TIMESTAMP);
                         this.rxWriteByte(byte);
-                                                
+
                         if (byte & 0x80) {
                             newStatus = Status.TIMESTAMP;
                         }
@@ -114,7 +114,7 @@ class ITMDecoder extends EventEmitter {
                         if (count === 3) { count = 4; }
 
                         const port = (byte & PORT_MASK) >>> 3;
-                        
+
                         if ((byte & HARDWARE_MASK) !== 0) {
                             this.resetRxPacket(port, count, PacketType.HARDWARE);
                             newStatus = Status.HARDWARE_EVENT;
@@ -189,7 +189,7 @@ class SWOWebview {
             localResourceRoots: [vscode.Uri.file(path.join(extensionPath, 'dist'))]
         };
 
-        this.viewPanel = vscode.window.createWebviewPanel('cortex-debug.grapher', `SWO Graphs [${time}]`, showOptions, viewOptions);
+        this.viewPanel = vscode.window.createWebviewPanel('csse3010-debug.grapher', `SWO Graphs [${time}]`, showOptions, viewOptions);
         this.viewPanel.webview.onDidReceiveMessage((msg) => { this.onMessage(msg); });
         this.viewPanel.webview.html = this.getHTML();
     }
@@ -254,7 +254,7 @@ export class SWOCore {
         }, (error) => {
             this.functionSymbols = [];
         });
-        
+
         if (this.source.connected) { this.connected = true; }
         else { this.source.on('connected', () => { this.connected = true; }); }
         this.source.on('data', this.handleData.bind(this));
@@ -263,7 +263,7 @@ export class SWOCore {
         if (args.graphConfig.length >= 1) {
             this.webview = new SWOWebview(extensionPath, args.graphConfig);
         }
-        
+
         args.swoConfig.decoders.forEach((conf) => {
             let processor;
 
@@ -344,7 +344,7 @@ export class SWOCore {
         }
     }
 
-    private overflow() {}
+    private overflow() { }
 
     private lostSynchronization() {
         this.processors.forEach((p) => p.lostSynchronization());
@@ -391,7 +391,7 @@ export class SWOCore {
             this.webview.sendMessage(message);
         }
     }
-    
+
     public dispose() {
         this.processors.forEach((p) => p.dispose());
         this.processors = null;

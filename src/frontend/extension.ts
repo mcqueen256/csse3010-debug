@@ -52,15 +52,15 @@ export class CortexDebugExtension {
             const dirPath = path.join(context.extensionPath, 'data', 'SVDMap.json');
             tmp = JSON.parse(fs.readFileSync(dirPath, 'utf8'));
         }
-        catch (e) {}
+        catch (e) { }
 
         Reporting.activate(context);
 
-        this.peripheralTreeView = vscode.window.createTreeView('cortex-debug.peripherals', {
+        this.peripheralTreeView = vscode.window.createTreeView('csse3010-debug.peripherals', {
             treeDataProvider: this.peripheralProvider
         });
 
-        this.registerTreeView = vscode.window.createTreeView('cortex-debug.registers', {
+        this.registerTreeView = vscode.window.createTreeView('csse3010-debug.registers', {
             treeDataProvider: this.registerProvider
         });
 
@@ -68,18 +68,18 @@ export class CortexDebugExtension {
             vscode.workspace.registerTextDocumentContentProvider('examinememory', this.memoryProvider),
             vscode.workspace.registerTextDocumentContentProvider('disassembly', new DisassemblyContentProvider()),
 
-            vscode.commands.registerCommand('cortex-debug.peripherals.updateNode', this.peripheralsUpdateNode.bind(this)),
-            vscode.commands.registerCommand('cortex-debug.peripherals.copyValue', this.peripheralsCopyValue.bind(this)),
-            vscode.commands.registerCommand('cortex-debug.peripherals.setFormat', this.peripheralsSetFormat.bind(this)),
-            vscode.commands.registerCommand('cortex-debug.peripherals.forceRefresh', this.peripheralsForceRefresh.bind(this)),
-            vscode.commands.registerCommand('cortex-debug.peripherals.pin', this.peripheralsTogglePin.bind(this)),
-            vscode.commands.registerCommand('cortex-debug.peripherals.unpin', this.peripheralsTogglePin.bind(this)),
-            
-            vscode.commands.registerCommand('cortex-debug.registers.copyValue', this.registersCopyValue.bind(this)),
-            
-            vscode.commands.registerCommand('cortex-debug.examineMemory', this.examineMemory.bind(this)),
-            vscode.commands.registerCommand('cortex-debug.viewDisassembly', this.showDisassembly.bind(this)),
-            vscode.commands.registerCommand('cortex-debug.setForceDisassembly', this.setForceDisassembly.bind(this)),
+            vscode.commands.registerCommand('csse3010-debug.peripherals.updateNode', this.peripheralsUpdateNode.bind(this)),
+            vscode.commands.registerCommand('csse3010-debug.peripherals.copyValue', this.peripheralsCopyValue.bind(this)),
+            vscode.commands.registerCommand('csse3010-debug.peripherals.setFormat', this.peripheralsSetFormat.bind(this)),
+            vscode.commands.registerCommand('csse3010-debug.peripherals.forceRefresh', this.peripheralsForceRefresh.bind(this)),
+            vscode.commands.registerCommand('csse3010-debug.peripherals.pin', this.peripheralsTogglePin.bind(this)),
+            vscode.commands.registerCommand('csse3010-debug.peripherals.unpin', this.peripheralsTogglePin.bind(this)),
+
+            vscode.commands.registerCommand('csse3010-debug.registers.copyValue', this.registersCopyValue.bind(this)),
+
+            vscode.commands.registerCommand('csse3010-debug.examineMemory', this.examineMemory.bind(this)),
+            vscode.commands.registerCommand('csse3010-debug.viewDisassembly', this.showDisassembly.bind(this)),
+            vscode.commands.registerCommand('csse3010-debug.setForceDisassembly', this.setForceDisassembly.bind(this)),
 
             vscode.debug.onDidReceiveDebugSessionCustomEvent(this.receivedCustomEvent.bind(this)),
             vscode.debug.onDidStartDebugSession(this.debugSessionStarted.bind(this)),
@@ -89,7 +89,7 @@ export class CortexDebugExtension {
                 if (e && e.textEditor.document.fileName.endsWith('.cdmem')) { this.memoryProvider.handleSelection(e); }
             }),
 
-            vscode.debug.registerDebugConfigurationProvider('cortex-debug', new CortexDebugConfigurationProvider(context)),
+            vscode.debug.registerDebugConfigurationProvider('csse3010-debug', new CortexDebugConfigurationProvider(context)),
 
             this.registerTreeView,
             this.registerTreeView.onDidCollapseElement((e) => {
@@ -124,7 +124,7 @@ export class CortexDebugExtension {
     }
 
     private activeEditorChanged(editor: vscode.TextEditor) {
-        if (editor !== undefined && vscode.debug.activeDebugSession && vscode.debug.activeDebugSession.type === 'cortex-debug') {
+        if (editor !== undefined && vscode.debug.activeDebugSession && vscode.debug.activeDebugSession.type === 'csse3010-debug') {
             const uri = editor.document.uri;
             if (uri.scheme === 'file') {
                 // vscode.debug.activeDebugSession.customRequest('set-active-editor', { path: uri.path });
@@ -157,9 +157,9 @@ export class CortexDebugExtension {
                 ignoreFocusOut: true,
                 prompt: 'Function Name (exact or a regexp) to Disassemble.'
             });
-            
+
             funcname = funcname ? funcname.trim() : null;
-            if (!funcname) { return ; }
+            if (!funcname) { return; }
 
             let functions = this.functionSymbols.filter((s) => s.name === funcname);
             if (functions.length === 0) {
@@ -228,7 +228,7 @@ export class CortexDebugExtension {
             const force = result.label === 'Forced';
             vscode.debug.activeDebugSession.customRequest('set-force-disassembly', { force: force });
             Reporting.sendEvent('Force Disassembly', 'Set', force ? 'Forced' : 'Auto');
-        }, (error) => {});
+        }, (error) => { });
     }
 
     private examineMemory() {
@@ -365,7 +365,7 @@ export class CortexDebugExtension {
 
     // Debug Events
     private debugSessionStarted(session: vscode.DebugSession) {
-        if (session.type !== 'cortex-debug') { return; }
+        if (session.type !== 'csse3010-debug') { return; }
 
         // Clean-up Old output channels
         if (this.swo) {
@@ -382,7 +382,7 @@ export class CortexDebugExtension {
             }
 
             Reporting.beginSession(args as ConfigurationArguments);
-            
+
             this.registerProvider.debugSessionStarted();
             this.peripheralProvider.debugSessionStarted(svdfile ? svdfile : null);
 
@@ -393,7 +393,7 @@ export class CortexDebugExtension {
     }
 
     private debugSessionTerminated(session: vscode.DebugSession) {
-        if (session.type !== 'cortex-debug') { return; }
+        if (session.type !== 'csse3010-debug') { return; }
 
         Reporting.endSession();
 
@@ -410,7 +410,7 @@ export class CortexDebugExtension {
     }
 
     private receivedCustomEvent(e: vscode.DebugSessionCustomEvent) {
-        if (vscode.debug.activeDebugSession && vscode.debug.activeDebugSession.type !== 'cortex-debug') { return; }
+        if (vscode.debug.activeDebugSession && vscode.debug.activeDebugSession.type !== 'csse3010-debug') { return; }
         switch (e.event) {
             case 'custom-stop':
                 this.receivedStopEvent(e);
@@ -503,4 +503,4 @@ export function activate(context: vscode.ExtensionContext) {
     return new CortexDebugExtension(context);
 }
 
-export function deactivate() {}
+export function deactivate() { }

@@ -54,7 +54,7 @@ const STATIC_HANDLES_START = 0x010000;
 const STATIC_HANDLES_FINISH = 0x01FFFF;
 const VAR_HANDLES_START = 0x020000;
 
-const COMMAND_MAP = (c) => c.startsWith('-') ? c.substring(1) : `interpreter-exec console "${ c.replace(/"/g, '\\"') }"`;
+const COMMAND_MAP = (c) => c.startsWith('-') ? c.substring(1) : `interpreter-exec console "${c.replace(/"/g, '\\"')}"`;
 
 class CustomStoppedEvent extends Event implements DebugProtocol.Event {
     public readonly body: {
@@ -213,7 +213,7 @@ export class GDBDebugSession extends DebugSession {
 
     private normalizeArguments(args: ConfigurationArguments): ConfigurationArguments {
         args.graphConfig = args.graphConfig || [];
-        
+
         if (args.executable && !path.isAbsolute(args.executable)) {
             args.executable = path.normalize(path.join(args.cwd, args.executable));
         }
@@ -243,12 +243,12 @@ export class GDBDebugSession extends DebugSession {
             );
             return;
         }
-        
+
         const ControllerClass = SERVER_TYPE_MAP[this.args.servertype];
         this.serverController = new ControllerClass();
         this.serverController.setArguments(this.args);
         this.serverController.on('event', this.serverControllerEvent.bind(this));
-        
+
         this.quit = false;
         this.attached = false;
         this.started = false;
@@ -281,7 +281,7 @@ export class GDBDebugSession extends DebugSession {
                         response,
                         103,
                         `${this.serverController.name} GDB executable "${gdbExePath}" was not found.\n` +
-                            'Please configure "cortex-debug.armToolchainPath" or "cortex-debug.gdbPath" correctly.'
+                        'Please configure "csse3010-debug.armToolchainPath" or "csse3010-debug.gdbPath" correctly.'
                     );
                     return;
                 }
@@ -292,7 +292,7 @@ export class GDBDebugSession extends DebugSession {
                         response,
                         103,
                         `${this.serverController.name} GDB executable "${gdbExePath}" was not found.\n` +
-                            'Please configure "cortex-debug.armToolchainPath" or "cortex-debug.gdbPath"  correctly.'
+                        'Please configure "csse3010-debug.armToolchainPath" or "csse3010-debug.gdbPath"  correctly.'
                     );
                     return;
                 }
@@ -348,7 +348,7 @@ export class GDBDebugSession extends DebugSession {
                 }
 
                 this.serverController.serverLaunchCompleted();
-                
+
                 let gdbargs = ['-q', '--interpreter=mi2'];
                 gdbargs = gdbargs.concat(this.args.debuggerArgs || []);
 
@@ -364,7 +364,7 @@ export class GDBDebugSession extends DebugSession {
                     commands.push('interpreter-exec console "set print asm-demangle on"');
                 }
                 commands.push(...this.serverController.initCommands());
-                
+
                 if (attach) {
                     commands.push(...this.args.preAttachCommands.map(COMMAND_MAP));
                     const attachCommands = this.args.overrideAttachCommands != null ?
@@ -381,7 +381,7 @@ export class GDBDebugSession extends DebugSession {
                     commands.push(...this.args.postLaunchCommands.map(COMMAND_MAP));
                     commands.push(...this.serverController.swoCommands());
                 }
-                
+
                 this.serverController.debuggerLaunchStarted();
                 this.miDebugger.once('debug-ready', () => {
                     this.debugReady = true;
@@ -465,7 +465,7 @@ export class GDBDebugSession extends DebugSession {
                 ));
                 this.sendErrorResponse(response, 103, `Failed to launch ${this.serverController.name} GDB Server: ${error.toString()}`);
             });
-            
+
         }, (err) => {
             this.sendEvent(new TelemetryEvent('Error', 'Launching Server', `Failed to find open ports: ${err.toString()}`));
             this.sendErrorResponse(response, 103, `Failed to find open ports: ${err.toString()}`);
@@ -563,19 +563,19 @@ export class GDBDebugSession extends DebugSession {
                 this.sendResponse(response);
                 break;
             case 'read-memory':
-                if (this.stopped === false) { return ; }
+                if (this.stopped === false) { return; }
                 this.readMemoryRequestCustom(response, args['address'], args['length']);
                 break;
             case 'write-memory':
-                if (this.stopped === false) { return ; }
+                if (this.stopped === false) { return; }
                 this.writeMemoryRequest(response, args['address'], args['data']);
                 break;
             case 'read-registers':
-                if (this.stopped === false) { return ; }
+                if (this.stopped === false) { return; }
                 this.readRegistersRequest(response);
                 break;
             case 'read-register-list':
-                if (this.stopped === false) { return ; }
+                if (this.stopped === false) { return; }
                 this.readRegisterListRequest(response);
                 break;
             case 'disassemble':
@@ -802,7 +802,7 @@ export class GDBDebugSession extends DebugSession {
                     this.disableSendStoppedEvents = false;
                     this.server.exit();
                 }
-                catch (e) {}
+                catch (e) { }
                 finally {
                     this.sendResponse(response);
                 }
@@ -869,7 +869,7 @@ export class GDBDebugSession extends DebugSession {
         if (this.args.showDevDebugOutput && this.args.showDevDebugTimestamps) {
             const elapsed = Date.now() - this.timeStart;
             let elapsedStr = elapsed.toString();
-            while (elapsedStr.length < 10) { elapsedStr = '0' + elapsedStr ; }
+            while (elapsedStr.length < 10) { elapsedStr = '0' + elapsedStr; }
             return elapsedStr + ': ' + str;
         } else {
             return str;
@@ -913,7 +913,7 @@ export class GDBDebugSession extends DebugSession {
             this.handleMsg('stdout', `**** Paused Thread: not found. Using ID ${this.stoppedThreadId}. Not good\n`);
         }
     }
-    
+
     protected handleBreakpoint(info: MINode) {
         this.stopped = true;
         this.stoppedReason = 'breakpoint';
@@ -1092,7 +1092,7 @@ export class GDBDebugSession extends DebugSession {
             args.breakpoints.forEach((brk) => {
                 all.push(this.miDebugger.addBreakPoint({ raw: brk.name, condition: brk.condition, countCondition: brk.hitCondition }));
             });
-            
+
             try {
                 const breakpoints = await Promise.all(all);
                 const finalBrks = [];
@@ -1130,12 +1130,12 @@ export class GDBDebugSession extends DebugSession {
         const createBreakpoints = async (shouldContinue) => {
             this.debugReady = true;
             const currentBreakpoints = (this.breakpointMap.get(args.source.path) || []).map((bp) => bp.number);
-            
+
             try {
                 this.disableSendStoppedEvents = false;
                 await this.miDebugger.removeBreakpoints(currentBreakpoints);
                 this.breakpointMap.set(args.source.path, []);
-                
+
                 const all: Array<Promise<Breakpoint>> = [];
                 const sourcepath = decodeURIComponent(args.source.path);
 
@@ -1156,7 +1156,7 @@ export class GDBDebugSession extends DebugSession {
                     }
 
                     const symbol: SymbolInformation = await this.getDisassemblyForFunction(func, file);
-                    
+
                     if (symbol) {
                         args.breakpoints.forEach((brk) => {
                             if (brk.line <= symbol.instructions.length) {
@@ -1246,7 +1246,7 @@ export class GDBDebugSession extends DebugSession {
                 // Make sure VSCode knows about all the threads. GDB may still be in the process of notifying
                 // new threads while we already have a thread-list. Technically, this should never happen
                 if (!this.activeThreadIds.has(thId)) {
-                    this.handleThreadCreated({threadId: thId, threadGroupId: 'i1'});
+                    this.handleThreadCreated({ threadId: thId, threadGroupId: 'i1' });
                 }
             }
 
@@ -1344,7 +1344,7 @@ export class GDBDebugSession extends DebugSession {
                         if (url === this.activeEditorPath) { disassemble = true; }
                     }
                 }
-                
+
                 try {
                     if (disassemble) {
                         const symbolInfo = await this.getDisassemblyForFunction(element.function, element.fileName);
@@ -1361,7 +1361,7 @@ export class GDBDebugSession extends DebugSession {
                             else {
                                 fname = `${symbolInfo.name}.cdasm`;
                             }
-                            
+
                             const url = 'disassembly:///' + fname;
                             ret.push(new StackFrame(stackId, `${element.function}@${element.address}`, new Source(fname, url), line, 0));
                         }
@@ -1483,7 +1483,7 @@ export class GDBDebugSession extends DebugSession {
     //
     // Note that this becomes important in implementing set-variable where not much info is available
     */
-    private floatingVariableMap: {[scopeId: number]: {[name: string]: VariableObject}} = {};
+    private floatingVariableMap: { [scopeId: number]: { [name: string]: VariableObject } } = {};
 
     private putFloatingVariable(scopeId: number, name: string, varObj: VariableObject): void {
         const scopeMap = this.floatingVariableMap[scopeId] || {};
@@ -1728,7 +1728,7 @@ export class GDBDebugSession extends DebugSession {
 
                     // Variable members
                     let children: VariableObject[];
-                    const childMap: {[name: string]: number} = {};
+                    const childMap: { [name: string]: number } = {};
                     try {
                         children = await this.miDebugger.varListChildren(id.name, this.args.flattenAnonymous);
                         const vars = children.map((child) => {
@@ -2019,7 +2019,7 @@ export class GDBDebugSession extends DebugSession {
                         throw err;
                     }
                 }
-                
+
                 this.sendResponse(response);
             }
             catch (err) {

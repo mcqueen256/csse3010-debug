@@ -1,4 +1,4 @@
-import { TreeItem, TreeDataProvider, EventEmitter, Event, TreeItemCollapsibleState, debug, workspace, ProviderResult} from 'vscode';
+import { TreeItem, TreeDataProvider, EventEmitter, Event, TreeItemCollapsibleState, debug, workspace, ProviderResult } from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -53,7 +53,7 @@ export class RegisterTreeProvider implements TreeDataProvider<BaseNode> {
     public createRegisters(regInfo: string[]) {
         this.registerMap = {};
         this.registers = [];
-        
+
         regInfo.forEach((reg, idx) => {
             if (reg) {
                 const rn = new RegisterNode(reg, idx);
@@ -64,12 +64,12 @@ export class RegisterTreeProvider implements TreeDataProvider<BaseNode> {
 
         this.loaded = true;
 
-        workspace.findFiles('.vscode/.cortex-debug.registers.state.json', null, 1).then((value) => {
+        workspace.findFiles('.vscode/.csse3010-debug.registers.state.json', null, 1).then((value) => {
             if (value.length > 0) {
                 const fspath = value[0].fsPath;
                 const data = fs.readFileSync(fspath, 'utf8');
                 const settings = JSON.parse(data);
-                
+
                 settings.forEach((s: NodeSetting) => {
                     if (s.node.indexOf('.') === -1) {
                         const register = this.registers.find((r) => r.name === s.node);
@@ -126,7 +126,7 @@ export class RegisterTreeProvider implements TreeDataProvider<BaseNode> {
 
     public debugSessionTerminated() {
         if (workspace.workspaceFolders && workspace.workspaceFolders.length > 0) {
-            const fspath = path.join(workspace.workspaceFolders[0].uri.fsPath, '.vscode', '.cortex-debug.registers.state.json');
+            const fspath = path.join(workspace.workspaceFolders[0].uri.fsPath, '.vscode', '.csse3010-debug.registers.state.json');
             this._saveState(fspath);
         }
 
@@ -148,6 +148,6 @@ export class RegisterTreeProvider implements TreeDataProvider<BaseNode> {
     }
 
     public debugContinued() {
-        
+
     }
 }

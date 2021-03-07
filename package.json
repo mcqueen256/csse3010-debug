@@ -1,6 +1,6 @@
 {
     "activationEvents": [
-        "onDebugResolve:cortex-debug"
+        "onDebugResolve:csse3010-debug"
     ],
     "categories": [
         "Debuggers"
@@ -8,9 +8,9 @@
     "contributes": {
         "configuration": {
             "type": "object",
-            "title": "Cortex-Debug",
+            "title": "CSSE3010-Debug",
             "properties": {
-                "cortex-debug.armToolchainPath": {
+                "csse3010-debug.armToolchainPath": {
                     "type": [
                         "string",
                         "null"
@@ -18,7 +18,7 @@
                     "default": null,
                     "description": "Path to the GCC Arm Toolchain (standard prefix is \"arm-none-eabi\" - can be set through the armToolchainPrefix setting) to use. If not set the tools must be on the system path. Do not include the executable file name in this path."
                 },
-                "cortex-debug.armToolchainPrefix": {
+                "csse3010-debug.armToolchainPrefix": {
                     "type": [
                         "string",
                         "null"
@@ -26,7 +26,7 @@
                     "default": "arm-none-eabi",
                     "description": "The prefix to use for the arm toolchain - the standard release from arm uses \"arm-none-eabi\" but alternative toolchains may use a different prefix. Currently the gdb and objdump tools are needed."
                 },
-                "cortex-debug.gdbPath": {
+                "csse3010-debug.gdbPath": {
                     "type": [
                         "string",
                         "null"
@@ -34,7 +34,7 @@
                     "default": null,
                     "description": "This setting allows you to completely override the path/executable for the GDB executable. This is useful for cases where your gdb executable doesn't follow the standard <tuple>-gdb format - for example `gdb-multiarch`. This can be just the executable name (if on the system path) or the full path."
                 },
-                "cortex-debug.JLinkGDBServerPath": {
+                "csse3010-debug.JLinkGDBServerPath": {
                     "type": [
                         "string",
                         "null"
@@ -42,7 +42,7 @@
                     "default": null,
                     "description": "Path to the JLink GDB Server. If not set then JLinkGDBServer (JLinkGDBServerCL.exe on Windows) must be on the system path."
                 },
-                "cortex-debug.openocdPath": {
+                "csse3010-debug.openocdPath": {
                     "type": [
                         "string",
                         "null"
@@ -50,7 +50,7 @@
                     "default": null,
                     "description": "Path to the OpenOCD GDB Server executable. If not set then openocd (openocd.exe on Windows) must be on the system path."
                 },
-                "cortex-debug.pyocdPath": {
+                "csse3010-debug.pyocdPath": {
                     "type": [
                         "string",
                         "null"
@@ -58,7 +58,7 @@
                     "default": null,
                     "description": "Path to the PyOCD GDB Server executable. If not set then pyocd-gdbserver must be on the system path."
                 },
-                "cortex-debug.PEGDBServerPath": {
+                "csse3010-debug.PEGDBServerPath": {
                     "type": [
                         "string",
                         "null"
@@ -66,7 +66,7 @@
                     "default": null,
                     "description": "Path to the PEMicro GDB Server. If not set then PEGDBServer (pegdbserver_console.exe on Windows) must be on the system path."
                 },
-                "cortex-debug.stutilPath": {
+                "csse3010-debug.stutilPath": {
                     "type": [
                         "string",
                         "null"
@@ -74,7 +74,7 @@
                     "default": null,
                     "description": "Path to the Texane's ST-Util GDB Server executable. If not set then st-util (st-util.exe on Windows) must be on the system path."
                 },
-                "cortex-debug.stlinkPath": {
+                "csse3010-debug.stlinkPath": {
                     "type": [
                         "string",
                         "null"
@@ -82,7 +82,7 @@
                     "default": null,
                     "description": "Path to the ST-LINK_gdbserver executable. If not set then ST-LINK_gdbserver (ST-LINK_gdbserver.exe on Windows) must be on the system path."
                 },
-                "cortex-debug.stm32cubeprogrammer": {
+                "csse3010-debug.stm32cubeprogrammer": {
                     "type": [
                         "string",
                         "null"
@@ -90,17 +90,17 @@
                     "default": null,
                     "description": "This path is normally resolved to the installed STM32CubeIDE or STM32CubeProgrammer but can be overridden here."
                 },
-                "cortex-debug.enableTelemetry": {
+                "csse3010-debug.enableTelemetry": {
                     "type": "boolean",
                     "default": true,
                     "description": "Enable Telemetry for the Cortex-Debug Extension. Reporting will also respect the global telemetry.enableTelemetry setting."
                 },
-                "cortex-debug.flattenAnonymous": {
+                "csse3010-debug.flattenAnonymous": {
                     "type": "boolean",
                     "default": false,
                     "description": "If true, anonymous unions/structs are flattened in their parent data structure"
                 },
-                "cortex-debug.registerUseNaturalFormat": {
+                "csse3010-debug.registerUseNaturalFormat": {
                     "type": "boolean",
                     "default": true,
                     "description": "If true, display registers in their natural format as specified by ARM. Hex otherwise."
@@ -109,68 +109,68 @@
         },
         "commands": [
             {
-                "command": "cortex-debug.peripherals.updateNode",
+                "command": "csse3010-debug.peripherals.updateNode",
                 "title": "Update Value",
                 "icon": "$(pencil)"
             },
             {
-                "command": "cortex-debug.peripherals.copyValue",
+                "command": "csse3010-debug.peripherals.copyValue",
                 "title": "Copy Value",
                 "icon": "$(files)"
             },
             {
-                "command": "cortex-debug.registers.copyValue",
+                "command": "csse3010-debug.registers.copyValue",
                 "title": "Copy Value",
                 "icon": "$(files)"
             },
             {
-                "command": "cortex-debug.peripherals.setFormat",
+                "command": "csse3010-debug.peripherals.setFormat",
                 "title": "Set Value Format"
             },
             {
-                "command": "cortex-debug.peripherals.forceRefresh",
+                "command": "csse3010-debug.peripherals.forceRefresh",
                 "title": "Refresh"
             },
             {
-                "command": "cortex-debug.peripherals.pin",
+                "command": "csse3010-debug.peripherals.pin",
                 "title": "Pin",
                 "icon": "$(pin)"
             },
             {
-                "command": "cortex-debug.peripherals.unpin",
+                "command": "csse3010-debug.peripherals.unpin",
                 "title": "Unpin",
                 "icon": "$(pinned)"
             },
             {
-                "category": "Cortex-Debug",
-                "command": "cortex-debug.examineMemory",
+                "category": "CSSE3010-Debug",
+                "command": "csse3010-debug.examineMemory",
                 "title": "View Memory"
             },
             {
-                "category": "Cortex-Debug",
-                "command": "cortex-debug.viewDisassembly",
+                "category": "CSSE3010-Debug",
+                "command": "csse3010-debug.viewDisassembly",
                 "title": "View Disassembly (Function)"
             },
             {
-                "category": "Cortex-Debug",
-                "command": "cortex-debug.setForceDisassembly",
+                "category": "CSSE3010-Debug",
+                "command": "csse3010-debug.setForceDisassembly",
                 "title": "Set Force Disassembly"
             }
         ],
         "languages": [
             {
-                "id": "cortex-debug.disassembly",
+                "id": "csse3010-debug.disassembly",
                 "aliases": [
-                    "Cortex-Debug Disassembly"
+                    "CSSE3010-Debug Disassembly"
                 ],
                 "extensions": [
                     ".cdasm"
                 ]
             },
             {
-                "id": "cortex-debug.memoryview",
+                "id": "csse3010-debug.memoryview",
                 "aliases": [
-                    "Cortex-Debug Memory View"
+                    "CSSE3010-Debug Memory View"
                 ],
                 "extensions": [
                     ".cdmem"
@@ -179,12 +179,12 @@
         ],
         "grammars": [
             {
-                "language": "cortex-debug.disassembly",
+                "language": "csse3010-debug.disassembly",
                 "scopeName": "source.cortex-debug-disassembly",
                 "path": "./syntaxes/cortex-debug-disassembly.json"
             },
             {
-                "language": "cortex-debug.memoryview",
+                "language": "csse3010-debug.memoryview",
                 "scopeName": "source.cortex-debug-memoryview",
                 "path": "./syntaxes/cortex-debug-memoryview.json"
             }
@@ -206,7 +206,7 @@
                 "language": "asm"
             },
             {
-                "language": "cortex-debug.disassembly"
+                "language": "csse3010-debug.disassembly"
             }
         ],
         "debuggers": [
@@ -287,7 +287,7 @@
                                 "description": "Additional GDB Commands to be executed at the end of the re-start sequence, after a debug session has already started."
                             },
                             "overrideGDBServerStartedRegex": {
-                                "description": "You can supply a regular expression (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) in the configuration property to override the output from the GDB server that is looked for to determine if the GDB server has started. Under most circumstances this will not be necessary - but could be needed as a result of a change in the output of a GDB server making it incompatible with cortex-debug. This property has no effect for bmp or external GDB server types.",
+                                "description": "You can supply a regular expression (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) in the configuration property to override the output from the GDB server that is looked for to determine if the GDB server has started. Under most circumstances this will not be necessary - but could be needed as a result of a change in the output of a GDB server making it incompatible with csse3010-debug. This property has no effect for bmp or external GDB server types.",
                                 "type": "string",
                                 "default": null
                             },
@@ -806,6 +806,16 @@
                                     "external"
                                 ]
                             },
+                            "host": {
+                                "default": "localhost",
+                                "description": "IP Address of the GDBServer",
+                                "type": "string"
+                            },
+                            "port": {
+                                "default": "55000",
+                                "description": "Port of the GDBServer",
+                                "type": "string"
+                            },
                             "cwd": {
                                 "description": "Path of project",
                                 "type": "string"
@@ -864,7 +874,7 @@
                                 "description": "Additional GDB Commands to be executed at the end of the re-start sequence, after a debug session has already started."
                             },
                             "overrideGDBServerStartedRegex": {
-                                "description": "You can supply a regular expression (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) in the configuration property to override the output from the GDB server that is looked for to determine if the GDB server has started. Under most circumstances this will not be necessary - but could be needed as a result of a change in the output of a GDB server making it incompatible with cortex-debug. This property has no effect for bmp or external GDB server types.",
+                                "description": "You can supply a regular expression (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions) in the configuration property to override the output from the GDB server that is looked for to determine if the GDB server has started. Under most circumstances this will not be necessary - but could be needed as a result of a change in the output of a GDB server making it incompatible with csse3010-debug. This property has no effect for bmp or external GDB server types.",
                                 "type": "string",
                                 "default": null
                             },
@@ -1395,11 +1405,11 @@
                             "executable": "${1:./bin/executable.elf}",
                             "name": "${6:Debug Microcontroller}",
                             "request": "launch",
-                            "type": "cortex-debug",
+                            "type": "csse3010-debug",
                             "servertype": "jlink"
                         },
                         "description": "Debugs an embedded ARM Cortex-M microcontroller using GDB + JLink",
-                        "label": "Cortex Debug: JLink"
+                        "label": "CSSE3010 Debug: JLink"
                     },
                     {
                         "body": {
@@ -1407,11 +1417,11 @@
                             "executable": "${1:./bin/executable.elf}",
                             "name": "${6:Debug Microcontroller}",
                             "request": "launch",
-                            "type": "cortex-debug",
+                            "type": "csse3010-debug",
                             "servertype": "openocd"
                         },
                         "description": "Debugs an embedded ARM Cortex-M microcontroller using GDB + OpenOCD",
-                        "label": "Cortex Debug: OpenOCD"
+                        "label": "CSSE3010 Debug: OpenOCD"
                     },
                     {
                         "body": {
@@ -1419,11 +1429,11 @@
                             "executable": "${1:./bin/executable.elf}",
                             "name": "${6:Debug Microcontroller}",
                             "request": "launch",
-                            "type": "cortex-debug",
+                            "type": "csse3010-debug",
                             "servertype": "stutil"
                         },
                         "description": "Debugs an embedded ARM Cortex-M microcontroller using GDB + Texane's st-util GDB server (https://github.com/texane/stlink)",
-                        "label": "Cortex Debug: ST-Util"
+                        "label": "CSSE3010 Debug: ST-Util"
                     },
                     {
                         "body": {
@@ -1431,11 +1441,11 @@
                             "executable": "${1:./bin/executable.elf}",
                             "name": "${6:Debug Microcontroller}",
                             "request": "launch",
-                            "type": "cortex-debug",
+                            "type": "csse3010-debug",
                             "servertype": "stlink"
                         },
                         "description": "Debugs an embedded ARM Cortex-M microcontroller using GDB + STMicroelectronic's ST-LINK_gdbserver part of STM32CubeIDE",
-                        "label": "Cortex Debug: ST-LINK"
+                        "label": "CSSE3010 Debug: ST-LINK"
                     },
                     {
                         "body": {
@@ -1443,145 +1453,145 @@
                             "executable": "${1:./bin/executable.elf}",
                             "name": "${6:Debug Microcontroller}",
                             "request": "launch",
-                            "type": "cortex-debug",
+                            "type": "csse3010-debug",
                             "servertype": "pyocd"
                         },
                         "description": "Debugs an embedded ARM Cortex-M microcontroller using GDB + PyOCD",
-                        "label": "Cortex Debug: PyOCD"
+                        "label": "CSSE3010 Debug: PyOCD"
                     }
                 ],
                 "initialConfigurations": [
                     {
-                        "name": "Cortex Debug",
+                        "name": "CSSE3010 Debug",
                         "cwd": "${workspaceRoot}",
                         "executable": "./bin/executable.elf",
                         "request": "launch",
-                        "type": "cortex-debug",
+                        "type": "csse3010-debug",
                         "servertype": "jlink"
                     }
                 ],
                 "extensions": [],
-                "label": "Cortex Debug",
+                "label": "CSSE3010 Debug",
                 "program": "./dist/debugadapter.js",
                 "runtime": "node",
-                "type": "cortex-debug",
+                "type": "csse3010-debug",
                 "variables": {}
             }
         ],
         "menus": {
             "commandPalette": [
                 {
-                    "command": "cortex-debug.peripherals.updateNode",
+                    "command": "csse3010-debug.peripherals.updateNode",
                     "when": "false"
                 },
                 {
-                    "command": "cortex-debug.peripherals.copyValue",
+                    "command": "csse3010-debug.peripherals.copyValue",
                     "when": "false"
                 },
                 {
-                    "command": "cortex-debug.peripherals.forceRefresh",
+                    "command": "csse3010-debug.peripherals.forceRefresh",
                     "when": "false"
                 },
                 {
-                    "command": "cortex-debug.peripherals.pin",
+                    "command": "csse3010-debug.peripherals.pin",
                     "when": "false"
                 },
                 {
-                    "command": "cortex-debug.peripherals.unpin",
+                    "command": "csse3010-debug.peripherals.unpin",
                     "when": "false"
                 },
                 {
-                    "command": "cortex-debug.registers.copyValue",
+                    "command": "csse3010-debug.registers.copyValue",
                     "when": "false"
                 },
                 {
-                    "command": "cortex-debug.examineMemory",
-                    "when": "debugType == cortex-debug"
+                    "command": "csse3010-debug.examineMemory",
+                    "when": "debugType == csse3010-debug"
                 },
                 {
-                    "command": "cortex-debug.viewDisassembly",
-                    "when": "debugType == cortex-debug"
+                    "command": "csse3010-debug.viewDisassembly",
+                    "when": "debugType == csse3010-debug"
                 },
                 {
-                    "command": "cortex-debug.setForceDisassembly",
-                    "when": "debugType == cortex-debug"
+                    "command": "csse3010-debug.setForceDisassembly",
+                    "when": "debugType == csse3010-debug"
                 }
             ],
             "view/item/context": [
                 {
-                    "command": "cortex-debug.peripherals.updateNode",
-                    "when": "view == cortex-debug.peripherals && viewItem == field",
+                    "command": "csse3010-debug.peripherals.updateNode",
+                    "when": "view == csse3010-debug.peripherals && viewItem == field",
                     "group": "inline"
                 },
                 {
-                    "command": "cortex-debug.peripherals.updateNode",
-                    "when": "view == cortex-debug.peripherals && viewItem == fieldWO",
+                    "command": "csse3010-debug.peripherals.updateNode",
+                    "when": "view == csse3010-debug.peripherals && viewItem == fieldWO",
                     "group": "inline"
                 },
                 {
-                    "command": "cortex-debug.peripherals.updateNode",
-                    "when": "view == cortex-debug.peripherals && viewItem == registerRW",
+                    "command": "csse3010-debug.peripherals.updateNode",
+                    "when": "view == csse3010-debug.peripherals && viewItem == registerRW",
                     "group": "inline"
                 },
                 {
-                    "command": "cortex-debug.peripherals.updateNode",
-                    "when": "view == cortex-debug.peripherals && viewItem == registerWO",
+                    "command": "csse3010-debug.peripherals.updateNode",
+                    "when": "view == csse3010-debug.peripherals && viewItem == registerWO",
                     "group": "inline"
                 },
                 {
-                    "command": "cortex-debug.peripherals.copyValue",
-                    "when": "view == cortex-debug.peripherals && viewItem == field",
+                    "command": "csse3010-debug.peripherals.copyValue",
+                    "when": "view == csse3010-debug.peripherals && viewItem == field",
                     "group": "inline"
                 },
                 {
-                    "command": "cortex-debug.peripherals.copyValue",
-                    "when": "view == cortex-debug.peripherals && viewItem == registerRW",
+                    "command": "csse3010-debug.peripherals.copyValue",
+                    "when": "view == csse3010-debug.peripherals && viewItem == registerRW",
                     "group": "inline"
                 },
                 {
-                    "command": "cortex-debug.peripherals.copyValue",
-                    "when": "view == cortex-debug.peripherals && viewItem == registerRO",
+                    "command": "csse3010-debug.peripherals.copyValue",
+                    "when": "view == csse3010-debug.peripherals && viewItem == registerRO",
                     "group": "inline"
                 },
                 {
-                    "command": "cortex-debug.peripherals.forceRefresh",
-                    "when": "view == cortex-debug.peripherals && viewItem == registerRW"
+                    "command": "csse3010-debug.peripherals.forceRefresh",
+                    "when": "view == csse3010-debug.peripherals && viewItem == registerRW"
                 },
                 {
-                    "command": "cortex-debug.peripherals.forceRefresh",
-                    "when": "view == cortex-debug.peripherals && viewItem == register"
+                    "command": "csse3010-debug.peripherals.forceRefresh",
+                    "when": "view == csse3010-debug.peripherals && viewItem == register"
                 },
                 {
-                    "command": "cortex-debug.peripherals.forceRefresh",
-                    "when": "view == cortex-debug.peripherals && viewItem == registerRO"
+                    "command": "csse3010-debug.peripherals.forceRefresh",
+                    "when": "view == csse3010-debug.peripherals && viewItem == registerRO"
                 },
                 {
-                    "command": "cortex-debug.peripherals.forceRefresh",
-                    "when": "view == cortex-debug.peripherals && viewItem =~ /peripheral.*/"
+                    "command": "csse3010-debug.peripherals.forceRefresh",
+                    "when": "view == csse3010-debug.peripherals && viewItem =~ /peripheral.*/"
                 },
                 {
-                    "command": "cortex-debug.peripherals.pin",
-                    "when": "view == cortex-debug.peripherals && viewItem == peripheral",
+                    "command": "csse3010-debug.peripherals.pin",
+                    "when": "view == csse3010-debug.peripherals && viewItem == peripheral",
                     "group": "inline"
                 },
                 {
-                    "command": "cortex-debug.peripherals.unpin",
-                    "when": "view == cortex-debug.peripherals && viewItem == peripheral.pinned",
+                    "command": "csse3010-debug.peripherals.unpin",
+                    "when": "view == csse3010-debug.peripherals && viewItem == peripheral.pinned",
                     "group": "inline"
                 },
                 {
-                    "command": "cortex-debug.registers.copyValue",
-                    "when": "view == cortex-debug.registers && viewItem == register",
+                    "command": "csse3010-debug.registers.copyValue",
+                    "when": "view == csse3010-debug.registers && viewItem == register",
                     "group": "inline"
                 },
                 {
-                    "command": "cortex-debug.registers.copyValue",
-                    "when": "view == cortex-debug.registers && viewItem == field",
+                    "command": "csse3010-debug.registers.copyValue",
+                    "when": "view == csse3010-debug.registers && viewItem == field",
                     "group": "inline"
                 },
                 {
-                    "command": "cortex-debug.peripherals.setFormat",
-                    "when": "view == cortex-debug.peripherals"
+                    "command": "csse3010-debug.peripherals.setFormat",
+                    "when": "view == csse3010-debug.peripherals"
                 }
             ],
             "view/title": []
@@ -1589,14 +1599,14 @@
         "views": {
             "debug": [
                 {
-                    "id": "cortex-debug.peripherals",
+                    "id": "csse3010-debug.peripherals",
                     "name": "Cortex Peripherals",
-                    "when": "debugType == cortex-debug"
+                    "when": "debugType == csse3010-debug"
                 },
                 {
-                    "id": "cortex-debug.registers",
+                    "id": "csse3010-debug.registers",
                     "name": "Cortex Registers",
-                    "when": "debugType == cortex-debug"
+                    "when": "debugType == csse3010-debug"
                 }
             ]
         }
@@ -1624,7 +1634,7 @@
         "vscode-extension-telemetry": "0.1.1",
         "xml2js": "^0.4.23"
     },
-    "description": "ARM Cortex-M GDB Debugger support for VSCode",
+    "description": "Modified (CSSE3010) ARM Cortex-M GDB Debugger support for VSCode",
     "devDependencies": {
         "@types/binary-parser": "^1.5.0",
         "@types/mocha": "^5.2.7",
@@ -1638,24 +1648,21 @@
         "webpack": "^4.46.0",
         "webpack-cli": "^3.3.12"
     },
-    "displayName": "Cortex-Debug",
+    "displayName": "CSSE3010-Debug",
     "engines": {
         "vscode": "^1.52.0"
     },
     "icon": "images/icon.png",
     "keywords": [
-        "cortex-m",
-        "gdb",
-        "debug",
-        "embedded"
+        "csse3010"
     ],
     "main": "./dist/extension",
-    "name": "cortex-debug",
+    "name": "csse3010-debug",
     "preview": true,
-    "publisher": "marus25",
+    "publisher": "mcqueen256",
     "repository": {
         "type": "git",
-        "url": "https://github.com/Marus/cortex-debug.git"
+        "url": "https://github.com/mcqueen256/csse3010-debug.git"
     },
     "scripts": {
         "vscode:prepublish": "webpack --mode production",
